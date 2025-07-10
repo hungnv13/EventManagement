@@ -14,6 +14,8 @@ public class HomeController : Controller
         _context = context;
     }
 
+
+    //hihihi tes
     public IActionResult AdminDashboard()
     {
         var role = HttpContext.Session.GetString("Role");
