@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Lỗi khi đặt vé";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-5 text-center border-danger" style="max-width: 600px; width: 100%;">
+        <h2 class="text-danger mb-3">
+            <i class="bi bi-x-circle-fill"></i> Đặt vé thất bại
+        </h2>
+
+        <p class="fs-5 text-muted">
+            ❌ Đã xảy ra lỗi trong quá trình xử lý đơn hàng.
+        </p>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger mt-3">
+                @ViewBag.Error
+            </div>
+        }
+
+        <a href="/Home/UserDashboard" class="btn btn-secondary mt-4">
+            <i class="bi bi-arrow-left-circle"></i> Quay lại trang người dùng
+        </a>
+    </div>
+</div>

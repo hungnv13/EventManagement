@@ -1,0 +1,66 @@
+﻿@model List<EventManagement.Models.Ticket>
+
+@{
+    ViewBag.Title = "Vé của tôi";
+}
+
+<style>
+    .ticket-card {
+        border-left: 6px dashed #007bff;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
+        height: 100%;
+    }
+
+        .ticket-card:hover {
+            transform: scale(1.02);
+        }
+
+    .ticket-footer {
+        background-color: #f8f9fa;
+        border-top: 1px dashed #007bff;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .ticket-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    .ticket-body p {
+        margin: 4px 0;
+    }
+</style>
+
+<h2 class="mb-4">🎟️ Vé của tôi</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Bạn chưa mua vé nào.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var ticket in Model)
+        {
+            <div class="col">
+                <div class="ticket-card p-3 bg-white">
+                    <div class="ticket-body">
+                        <div class="ticket-title">🎫 @ticket.Event?.Title</div>
+                        <p><strong>Số lượng:</strong> @ticket.Quantity</p>
+                        <p><strong>Ngày mua:</strong> @ticket.PurchaseDate.ToString("dd/MM/yyyy HH:mm")</p>
+                        <p><strong>Địa điểm:</strong> @ticket.Event?.Location</p>
+                        <p><strong>Thời gian:</strong> @ticket.Event?.StartTime.ToString("dd/MM/yyyy HH:mm")</p>
+                    </div>
+                    <div class="ticket-footer">
+                        Mã vé: @ticket.TicketId
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

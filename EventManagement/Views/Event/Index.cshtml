@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EventManagement.Models.Event>
+@{
+    ViewBag.Title = "Danh sách sự kiện";
+    var role = Context.Session.GetString("Role");
+    var userId = Context.Session.GetString("UserId");
+}
+
+<h2>Danh sách sự kiện</h2>
+
+@if (role == "Admin" || role == "Staff")
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Thêm sự kiện</a>
+    </p>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Địa điểm</th>
+            <th>Thời gian bắt đầu</th>
+            <th>Thời gian kết thúc</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Location</td>
+                <td>@item.StartTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.EndTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.EventId" class="btn btn-info btn-sm">Chi tiết</a>
+
+                    @if (role == "User")
+                    {
+                        <a href="/Ticket/Buy?eventId=@item.EventId" class="btn btn-success btn-sm ml-1">Mua vé</a>
+                    }
+
+                    @if (role == "Admin" || (role == "User" && item.UserId.ToString() == userId))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.EventId" class="btn btn-warning btn-sm ml-1">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.EventId" class="btn btn-danger btn-sm ml-1">Xoá</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

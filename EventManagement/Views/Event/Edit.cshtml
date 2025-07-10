@@ -1,0 +1,34 @@
+﻿@model EventManagement.Models.Event
+
+@{
+    ViewBag.Title = "Chỉnh sửa sự kiện";
+}
+
+<h2>Chỉnh sửa</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="EventId" />
+    <div class="form-group">
+        <label>Tiêu đề</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Mô tả</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Địa điểm</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Thời gian bắt đầu</label>
+        <input asp-for="StartTime" type="datetime-local" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Thời gian kết thúc</label>
+        <input asp-for="EndTime" type="datetime-local" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>

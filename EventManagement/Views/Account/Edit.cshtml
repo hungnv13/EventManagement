@@ -1,0 +1,52 @@
+﻿@model EventManagement.Models.UserAccount
+@{
+    ViewBag.Title = "Chỉnh sửa tài khoản";
+    bool isAdmin = ViewBag.IsAdmin ?? false;
+}
+
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="mb-4 text-center">
+        @(isAdmin ? "👑 Quản lý tài khoản (Admin)" : "👤 Chỉnh sửa thông tin cá nhân")
+    </h3>
+
+    <form method="post">
+        <input type="hidden" asp-for="UserId" />
+
+        <div class="form-group mb-3">
+            <label asp-for="Username">Tên đăng nhập</label>
+            <input asp-for="Username" class="form-control" required  readonly/>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" required />
+        </div>
+
+        @if (isAdmin)
+        {
+            <div class="form-group mb-3">
+                <label asp-for="Role">Vai trò</label>
+                <select asp-for="Role" class="form-control">
+                    <option>User</option>
+                    <option>Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Password">Mật khẩu</label>
+                <input asp-for="Password" class="form-control" />
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success w-100">Lưu thay đổi</button>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Message as string))
+        {
+            <p class="text-success text-center mt-3">@ViewBag.Message</p>
+        }
+
+        <div class="text-center mt-3">
+            <a href="@(isAdmin ? "/Account/Index" : "/Home/UserDashboard")" class="btn btn-outline-secondary">🔙 Quay lại</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Đặt vé thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card border-success shadow-sm">
+        <div class="card-body text-center">
+            <h2 class="text-success"><i class="fas fa-check-circle"></i> Đặt vé thành công!</h2>
+            <p class="lead mt-3">🎉 Cảm ơn bạn đã đặt vé. Mã QR của bạn đã được gửi qua email.</p>
+
+            <div class="mt-4">
+                <a href="@Url.Action("UserDashboard", "Home")" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang người dùng
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@model EventManagement.Models.Event
+@using Microsoft.AspNetCore.Http
+@{
+    ViewBag.Title = "Chi tiết sự kiện";
+    var role = Context.Session.GetString("Role");
+    var userId = Context.Session.GetString("UserId");
+}
+
+<div class="container mt-4">
+    <div class="row bg-dark text-white rounded p-4">
+        <!-- Left Info -->
+        <div class="col-md-6">
+            <h4 class="fw-bold">@Model.Title</h4>
+
+            <p>
+                <i class="bi bi-calendar-event"></i>
+                @Model.StartTime.ToString("HH:mm") - @Model.EndTime.ToString("HH:mm"),
+                <span class="text-success fw-bold">@Model.StartTime.ToString("dd 'Tháng' MM, yyyy")</span>
+            </p>
+
+            <p><i class="bi bi-geo-alt-fill"></i> <strong>@Model.Location</strong></p>
+
+            <p class="text-muted">212 Lý Chính Thắng, Quận 3, TP.HCM</p>
+
+            <hr />
+
+            <h5>
+                Giá từ <span class="text-success fw-bold">
+                    @Model.Price.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) ₫
+                </span>
+            </h5>
+
+            @if (role == "User")
+            {
+                <a href="/Ticket/Buy?eventId=@Model.EventId" class="btn btn-success mt-2">Mua vé ngay</a>
+            }
+        </div>
+
+        <!-- Right Image -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Url.Content(Model.ImageUrl)"
+                     alt="Poster"
+                     class="img-fluid rounded shadow"
+                     style="max-height: 350px; object-fit: cover;" />
+            }
+        </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mt-5">
+        <h4 class="fw-bold">Giới thiệu</h4>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">🎤 Giới thiệu sự kiện</h5>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin & Staff action -->
+    <div class="mt-4">
+        @if (role == "Admin" || (role == "Staff" && Model.UserId.ToString() == userId))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.EventId" class="btn btn-primary">Sửa</a>
+        }
+
+        @if (role == "User")
+        {
+            <a href="/Home/UserDashboard" class="btn btn-secondary ml-2">Quay lại</a>
+        }
+        else if (role == "Admin")
+        {
+            <a href="/Home/AdminDashboard" class="btn btn-secondary ml-2">Quay lại</a>
+        }
+        else if (role == "Staff")
+        {
+            <a href="/Home/StaffDashboard" class="btn btn-secondary ml-2">Quay lại</a>
+        }
+    </div>
+</div>

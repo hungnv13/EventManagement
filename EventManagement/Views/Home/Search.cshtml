@@ -1,0 +1,30 @@
+﻿@model List<EventManagement.Models.Event>
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+    var query = ViewBag.Query as string;
+}
+
+<h2 class="mb-4">Kết quả tìm kiếm cho: <em>@query</em></h2>
+
+@if (!Model.Any())
+{
+    <p>Không tìm thấy sự kiện nào phù hợp.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var ev in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <img src="@ev.ImageUrl" class="card-img-top" alt="@ev.Title" style="height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@ev.Title</h5>
+                        <p><i class="bi bi-geo-alt-fill"></i> @ev.Location</p>
+                        <a href="/Event/Details/@ev.EventId" class="btn btn-success">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

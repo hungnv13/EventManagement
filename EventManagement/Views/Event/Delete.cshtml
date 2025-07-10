@@ -1,0 +1,23 @@
+﻿@model EventManagement.Models.Event
+
+@{
+    ViewBag.Title = "Xoá sự kiện";
+}
+
+<h2 class="mb-4 text-danger">❗ Bạn có chắc muốn xoá sự kiện này không?</h2>
+
+<div class="border rounded p-4 bg-light mb-3">
+    <p><strong>🎫 Tiêu đề:</strong> @Model.Title</p>
+    <p><strong>🕒 Thời gian:</strong> @Model.StartTime.ToString("dd/MM/yyyy HH:mm")</p>
+    <p><strong>📍 Địa điểm:</strong> @Model.Location</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="EventId" />
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Xoá
+    </button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">
+        <i class="bi bi-arrow-left-circle"></i> Huỷ
+    </a>
+</form>

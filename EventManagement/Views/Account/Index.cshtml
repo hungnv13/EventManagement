@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EventManagement.Models.UserAccount>
+@{
+    ViewBag.Title = "Danh sách người dùng";
+    var currentUserId = Context.Session.GetString("UserId");
+}
+
+<h2 class="text-primary mb-4">Danh sách người dùng</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tên đăng nhập</th>
+            <th>Email</th>
+            <th>Quyền</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>
+                    @if (user.Role == "Admin")
+                    {
+                        <span class="badge bg-danger">Admin</span>
+                    }
+                    else if (user.Role == "User")
+                    {
+                        <span class="badge bg-primary">User</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@user.Role</span>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="@Url.Action("Edit", "Account", new { id = user.UserId })">Sửa</a>
+
+                    @if (user.UserId.ToString() != currentUserId)
+                    {
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Account", new { id = user.UserId })"
+                           onclick="return confirm('Bạn có chắc chắn muốn xoá người dùng này?');">Xoá</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Không thể xoá chính bạn</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

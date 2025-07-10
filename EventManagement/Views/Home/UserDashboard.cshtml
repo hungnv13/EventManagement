@@ -1,0 +1,45 @@
+﻿@model IEnumerable<EventManagement.Models.Event>
+@{
+    ViewBag.Title = "Trang người dùng";
+    var username = Context.Session.GetString("Username");
+    var keyword = Context.Request.Query["q"];
+}
+
+<h3 class="mt-5 mb-3">🎉 Sự kiện nổi bật</h3>
+
+@if (!string.IsNullOrEmpty(keyword))
+{
+    <p class="text-muted">
+        Kết quả tìm kiếm cho từ khóa: <strong>@keyword</strong>
+    </p>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">
+        Không tìm thấy sự kiện nào phù hợp với từ khóa: <strong>@keyword</strong>
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var ev in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(ev.ImageUrl))
+                    {
+                        <img src="@Url.Content(ev.ImageUrl)" class="card-img-top" alt="Ảnh sự kiện" style="height: 220px; object-fit: cover;" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@ev.Title</h5>
+                        <a href="/Event/Details/@ev.EventId" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                        <a asp-controller="Order" asp-action="Order" asp-route-eventId="@ev.EventId" class="btn btn-outline-success btn-sm ms-2">
+                            Mua vé
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

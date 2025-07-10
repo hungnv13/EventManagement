@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Đặt vé sự kiện";
+    var ev = ViewBag.Event as EventManagement.Models.Event;
+
+    if (ev == null)
+    {
+        <div class="alert alert-danger text-center mt-5">Không tìm thấy sự kiện.</div>
+        return;
+    }
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%;">
+        <div class="text-center mb-4">
+            <h3 class="text-primary">
+                <i class="bi bi-ticket-perforated-fill"></i> Đặt vé sự kiện
+            </h3>
+            <h5 class="text-dark mt-2">@ev.Title</h5>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form id="paymentForm" method="post" asp-action="CreatePaymentUrl" asp-controller="Order" asp-antiforgery="true">
+            <input type="hidden" name="eventId" value="@ev.EventId" />
+            <input type="hidden" id="ticketPrice" value="@ev.Price.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)" />
+
+            <div class="mb-3">
+                <label for="quantity" class="form-label">🎟️ Số lượng vé:</label>
+                <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">💸 Giá vé:</label>
+                <input type="text" class="form-control" value="@ev.Price.ToString("N0") VND" readonly />
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">💰 Tổng tiền:</label>
+                <input type="text" id="totalAmount" class="form-control text-danger fw-bold" readonly />
+            </div>
+
+            <button type="submit" class="btn btn-danger w-100">
+                <i class="bi bi-credit-card"></i> Thanh toán qua VNPAY
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateTotal() {
+            const price = parseFloat(document.getElementById("ticketPrice")?.value || "0");
+            const qty = parseInt(document.getElementById("quantity")?.value || "1");
+            const total = price * qty;
+            document.getElementById("totalAmount").value = total.toLocaleString("vi-VN") + " VND";
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateTotal();
+            document.getElementById("quantity").addEventListener("input", updateTotal);
+        });
+    </script>
+}
