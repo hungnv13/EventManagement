@@ -4,53 +4,65 @@
     var currentUserId = Context.Session.GetString("UserId");
 }
 
-<h2 class="text-primary mb-4">Danh sách người dùng</h2>
+<div class="container py-4">
+    <h2 class="mb-4 fw-bold text-uppercase text-center text-primary">
+        <i class="bi bi-people-fill me-2"></i>Danh sách người dùng
+    </h2>
 
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Tên đăng nhập</th>
-            <th>Email</th>
-            <th>Quyền</th>
-            <th>Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.UserId</td>
-                <td>@user.Username</td>
-                <td>@user.Email</td>
-                <td>
-                    @if (user.Role == "Admin")
-                    {
-                        <span class="badge bg-danger">Admin</span>
-                    }
-                    else if (user.Role == "User")
-                    {
-                        <span class="badge bg-primary">User</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">@user.Role</span>
-                    }
-                </td>
-                <td>
-                    <a class="btn btn-sm btn-warning" href="@Url.Action("Edit", "Account", new { id = user.UserId })">Sửa</a>
+    <div class="table-responsive shadow rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên đăng nhập</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Quyền</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="text-center">@user.UserId</td>
+                        <td>@user.Username</td>
+                        <td>@user.Email</td>
+                        <td class="text-center">
+                            @if (user.Role == "Admin")
+                            {
+                                <span class="badge bg-danger px-3 py-2">Admin</span>
+                            }
+                            else if (user.Role == "User")
+                            {
+                                <span class="badge bg-primary px-3 py-2">User</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary px-3 py-2">@user.Role</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-warning me-1"
+                               href="@Url.Action("Edit", "Account", new { id = user.UserId })">
+                                <i class="bi bi-pencil-square me-1"></i>Sửa
+                            </a>
 
-                    @if (user.UserId.ToString() != currentUserId)
-                    {
-                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Account", new { id = user.UserId })"
-                           onclick="return confirm('Bạn có chắc chắn muốn xoá người dùng này?');">Xoá</a>
-                    }
-                    else
-                    {
-                        <span class="text-muted">Không thể xoá chính bạn</span>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                            @if (user.UserId.ToString() != currentUserId)
+                            {
+                                <a class="btn btn-sm btn-danger"
+                                   href="@Url.Action("Delete", "Account", new { id = user.UserId })"
+                                   onclick="return confirm('Bạn có chắc chắn muốn xoá người dùng này?');">
+                                    <i class="bi bi-trash me-1"></i>Xoá
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="badge bg-light text-muted">Không thể xoá chính bạn</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿/* navbar.css */
+
+/* 🌟 Navbar Base */
+.navbar {
+    background: linear-gradient(to right, #28a745, #218838);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 1.5rem;
+}
+
+    .navbar-brand i {
+        margin-right: 5px;
+    }
+
+.nav-link,
+.btn-outline-light {
+    color: #f0f0f0 !important;
+    transition: 0.3s ease;
+}
+
+    .nav-link:hover,
+    .btn-outline-light:hover {
+        color: #fff !important;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+/* 🔍 Search */
+.search-form {
+    width: 500px;
+    max-width: 100%;
+}
+
+.search-input {
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    transition: box-shadow 0.3s ease;
+}
+
+    .search-input:focus {
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        outline: none;
+    }
+
+.search-btn {
+    border-radius: 50px;
+    padding: 0.45rem 1rem;
+    background-color: #fff;
+    color: #28a745;
+    border: 1px solid #28a745;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .search-btn:hover {
+        background-color: #28a745;
+        color: white;
+    }
+
+/* 🧾 Dropdown style */
+.dropdown-menu {
+    min-width: 200px;
+}
+
+.dropdown-item {
+    font-size: 0.95rem;
+}
+
+/* 📱 Responsive Fix */
+@media (max-width: 768px) {
+    .search-form {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .navbar-nav .btn {
+        margin-top: 10px;
+    }
+}

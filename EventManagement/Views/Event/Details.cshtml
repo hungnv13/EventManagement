@@ -6,33 +6,42 @@
     var userId = Context.Session.GetString("UserId");
 }
 
-<div class="container mt-4">
-    <div class="row bg-dark text-white rounded p-4">
+<div class="container py-5">
+    <div class="row bg-light rounded shadow p-4">
         <!-- Left Info -->
-        <div class="col-md-6">
-            <h4 class="fw-bold">@Model.Title</h4>
+        <div class="col-md-6 mb-4">
+            <h3 class="fw-bold text-primary">@Model.Title</h3>
 
-            <p>
-                <i class="bi bi-calendar-event"></i>
+            <p class="mb-2">
+                <i class="bi bi-calendar-event-fill text-danger me-2"></i>
                 @Model.StartTime.ToString("HH:mm") - @Model.EndTime.ToString("HH:mm"),
-                <span class="text-success fw-bold">@Model.StartTime.ToString("dd 'Tháng' MM, yyyy")</span>
+                <span class="text-success fw-semibold">@Model.StartTime.ToString("dd 'Tháng' MM, yyyy")</span>
             </p>
 
-            <p><i class="bi bi-geo-alt-fill"></i> <strong>@Model.Location</strong></p>
+            <p class="mb-2">
+                <i class="bi bi-geo-alt-fill text-warning me-2"></i>
+                <strong>@Model.Location</strong>
+            </p>
 
-            <p class="text-muted">212 Lý Chính Thắng, Quận 3, TP.HCM</p>
+            <p class="text-muted mb-3">212 Lý Chính Thắng, Quận 3, TP.HCM</p>
 
             <hr />
 
-            <h5>
-                Giá từ <span class="text-success fw-bold">
+            <h5 class="mb-3">
+                Giá vé từ:
+                <span class="text-success fw-bold fs-5">
                     @Model.Price.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) ₫
                 </span>
             </h5>
 
             @if (role == "User")
             {
-                <a href="/Ticket/Buy?eventId=@Model.EventId" class="btn btn-success mt-2">Mua vé ngay</a>
+                <a asp-controller="Order"
+                   asp-action="Order"
+                   asp-route-eventId="@Model.EventId"
+                   class="btn btn-success btn-lg mt-2 w-100">
+                    🎫 Mua vé
+                </a>
             }
         </div>
 
@@ -41,42 +50,49 @@
             @if (!string.IsNullOrEmpty(Model.ImageUrl))
             {
                 <img src="@Url.Content(Model.ImageUrl)"
-                     alt="Poster"
-                     class="img-fluid rounded shadow"
-                     style="max-height: 350px; object-fit: cover;" />
+                     alt="Poster sự kiện"
+                     class="img-fluid rounded-4 shadow-sm"
+                     style="max-height: 360px; object-fit: cover;" />
             }
         </div>
     </div>
 
     <!-- Description -->
     <div class="mt-5">
-        <h4 class="fw-bold">Giới thiệu</h4>
-        <div class="card">
+        <h4 class="fw-bold mb-3">🎤 Giới thiệu sự kiện</h4>
+        <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body">
-                <h5 class="card-title fw-bold">🎤 Giới thiệu sự kiện</h5>
-                <p>@Model.Description</p>
+                <p class="mb-0">@Model.Description</p>
             </div>
         </div>
     </div>
 
-    <!-- Admin & Staff action -->
-    <div class="mt-4">
+    <!-- Action Buttons -->
+    <div class="mt-5 d-flex flex-wrap gap-2">
         @if (role == "Admin" || (role == "Staff" && Model.UserId.ToString() == userId))
         {
-            <a asp-action="Edit" asp-route-id="@Model.EventId" class="btn btn-primary">Sửa</a>
+            <a asp-action="Edit" asp-route-id="@Model.EventId" class="btn btn-outline-primary">
+                ✏️ Sửa
+            </a>
         }
 
         @if (role == "User")
         {
-            <a href="/Home/UserDashboard" class="btn btn-secondary ml-2">Quay lại</a>
+            <a href="/Home/UserDashboard" class="btn btn-outline-secondary">
+                ⬅️ Quay lại trang người dùng
+            </a>
         }
         else if (role == "Admin")
         {
-            <a href="/Home/AdminDashboard" class="btn btn-secondary ml-2">Quay lại</a>
+            <a href="/Home/AdminDashboard" class="btn btn-outline-secondary">
+                ⬅️ Quay lại trang quản trị
+            </a>
         }
         else if (role == "Staff")
         {
-            <a href="/Home/StaffDashboard" class="btn btn-secondary ml-2">Quay lại</a>
+            <a href="/Home/StaffDashboard" class="btn btn-outline-secondary">
+                ⬅️ Quay lại trang nhân viên
+            </a>
         }
     </div>
 </div>

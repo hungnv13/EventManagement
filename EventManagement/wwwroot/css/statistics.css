@@ -1,0 +1,41 @@
+﻿body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+    font-weight: 700;
+    color: #343a40;
+}
+
+.chart-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table th {
+    background-color: #0d6efd;
+    color: white;
+    text-align: center;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+    .table td:nth-child(2),
+    .table td:nth-child(4) {
+        text-align: right;
+    }
+
+    .table td:nth-child(3) {
+        text-align: center;
+    }
+
+@media (max-width: 768px) {
+    .chart-container {
+        margin-bottom: 20px;
+    }
+}

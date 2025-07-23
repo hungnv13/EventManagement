@@ -27,6 +27,7 @@ namespace EventManagement.Controllers
                 .Include(e => e.User)
                 .Where(e => !e.IsDeleted);
 
+            // Chỉ lọc nếu là User, còn Admin và Staff thì xem tất cả
             if (role == "User")
             {
                 int userId = int.Parse(userIdStr);
@@ -36,6 +37,7 @@ namespace EventManagement.Controllers
             var events = query.OrderBy(e => e.StartTime).ToList();
             return View(events);
         }
+
 
 
         // GET: /Event/Details/5
